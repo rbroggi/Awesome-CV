@@ -86,20 +86,11 @@ Another option is rely on [**Docker**](https://www.docker.com/) for the build pr
 
 At a command prompt, run
 
-```bash
-$ xelatex {your-cv}.tex
-```
-
-For a docker build create a local container with a full installation packages (the first time you run this it might take a while because it will download all texlive-full version):
-
-```bash
-$ docker build -t <container_name> .
-```
 
 Compile using docker:
 
 ```bash
-$ docker run --rm -v "$(pwd)":/data <container_name> make
+$ docker run --rm --mount type=bind,source=${PWD}/FontAwesome.otf,target=/usr/local/share/fonts/FontAwesome.otf --user $(id -u):$(id -g) -i -w "/doc" -v "$PWD":/doc thomasweise/texlive make cv.pdf
 ```
 
 This should result in the creation of ``{your-cv}.pdf``
